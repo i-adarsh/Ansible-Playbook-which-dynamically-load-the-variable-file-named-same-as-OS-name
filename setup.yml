@@ -1,0 +1,19 @@
+---
+- hosts: all
+  vars_files:
+           - "{{ ansible_facts['distribution'] }}"
+  tasks:
+  - name: "Installing Packages"
+    package:
+              name: "{{ pkg_name }}"
+              state: present
+  
+  - name: "Copying Files"
+    get_url:
+              url: https://raw.githubusercontent.com/i-adarsh/Httpd-Server-on-Docker-by-Using-Ansible/main/index.html
+              dest: /var/www/html/index.html
+  
+  - name: Starting Webserver
+    service:
+              name: "{{ pkg_name }}"
+              state: started
